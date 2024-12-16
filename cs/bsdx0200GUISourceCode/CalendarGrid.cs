@@ -1090,12 +1090,25 @@
             {
                 int num5 = (this.m_sResourcesArray.Count > 1) ? 1 : this.StartDate.DayOfYear;
                 int num6 = (this.m_sResourcesArray.Count > 1) ? (this.m_sResourcesArray.Count + 1) : (this.Columns + this.StartDate.DayOfYear);
+
+                // detect overlapping years
+                DateTime lastDateOfYear = new DateTime(this.StartDate.Year, 12, 31);
+                int lastDayOfYear = lastDateOfYear.DayOfYear;
+
                 for (int i = num5; i < num6; i++)
                 {
+                    // detect overlapping years
+                    int ii = i;
+                    if (ii > lastDayOfYear)
+                    {
+                        ii = ii - lastDayOfYear;
+                    }
+
                     ArrayList list = new ArrayList();
                     for (int j = 1; j < this.Rows; j++)
                     {
-                        Rectangle rectangle2 = new Rectangle(i, j * this.m_nTimeScale, 1, this.m_nTimeScale);
+                        //Rectangle rectangle2 = new Rectangle(i, j * this.m_nTimeScale, 1, this.m_nTimeScale);
+                        Rectangle rectangle2 = new Rectangle(ii, j * this.m_nTimeScale, 1, this.m_nTimeScale);
                         int num9 = -1;
                         list.Clear();
                         foreach (int num10 in hashtable.Keys)
